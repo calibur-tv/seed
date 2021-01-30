@@ -1,15 +1,26 @@
+const isDev = process.env.NODE_ENV === 'development'
+
 export default {
   ssr: true,
-  modern: 'client',
+  modern: isDev ? false : 'server',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'seed',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      {
+        name: 'viewport',
+        content: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover'
+      },
+      { name: 'renderer', content: 'webkit|ie-comp|ie-stand' },
+      { name: 'force-rendering', content: 'webkit' },
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'dns-prefetch', href: 'https://fs.calibur.tv' },
+      { rel: 'preconnect', href: 'https://fc.calibur.tv' },
+      { rel: 'icon', type: 'image/x-icon', href: 'https://fs.calibur.tv/favicon.ico' }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -42,14 +53,17 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
+    icon: false,
+    meta: {},
     manifest: {
-      lang: 'en'
+      lang: 'zh-CN'
     }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     corejs: 3,
-    extractCSS: true
+    extractCSS: true,
+    publicPath: isDev ? '/_nuxt/' : 'https://fs.calibur.tv/static/'
   }
 }

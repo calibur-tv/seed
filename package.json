@@ -6,8 +6,10 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext \".js,.vue\" --ignore-path .gitignore . --fix"
+    "lint": "eslint --ext \".js,.vue\" --ignore-path .gitignore . --fix",
+    "upload": "ossutil cp -r ./.nuxt/dist/client oss://calibur-file/static/ -u",
+    "release": "fun deploy -y",
+    "deploy": "npm run build && npm run upload && npm run release"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
