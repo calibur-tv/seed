@@ -7,11 +7,6 @@ export default {
   head: {
     title: 'seed',
     meta: [
-      { charset: 'utf-8' },
-      {
-        name: 'viewport',
-        content: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover'
-      },
       { name: 'renderer', content: 'webkit|ie-comp|ie-stand' },
       { name: 'force-rendering', content: 'webkit' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' }
@@ -54,9 +49,27 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     icon: false,
-    meta: {},
+    meta: {
+      name: '',
+      author: '',
+      description: '',
+      lang: 'zh-CN',
+      ogSiteName: false,
+      ogTitle: false,
+      ogDescription: false,
+      ogImage: false,
+      ogUrl: false,
+      ogType: '',
+      mobileApp: false,
+      mobileAppIOS: false,
+      favicon: false,
+      charset: 'utf-8',
+      viewport: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover'
+    },
     manifest: {
-      lang: 'zh-CN'
+      name: '',
+      short_name: '',
+      description: ''
     }
   },
 
