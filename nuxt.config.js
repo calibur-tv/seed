@@ -70,6 +70,10 @@ export default {
       name: '',
       short_name: '',
       description: ''
+    },
+    workbox: {
+      workboxURL: 'https://fs.calibur.tv/workbox-514/workbox-sw.js',
+      offline: false
     }
   },
 
