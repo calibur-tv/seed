@@ -2,18 +2,19 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export default {
   ssr: true,
-  modern: isDev ? false : 'server',
+  modern: 'server',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'seed',
+    title: 'calibur | 天下漫友是一家',
     meta: [
       { name: 'renderer', content: 'webkit|ie-comp|ie-stand' },
       { name: 'force-rendering', content: 'webkit' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' }
     ],
     link: [
+      { rel: 'dns-prefetch', href: 'https://fc.calibur.tv' },
       { rel: 'dns-prefetch', href: 'https://fs.calibur.tv' },
-      { rel: 'preconnect', href: 'https://fc.calibur.tv' },
+      { rel: 'preconnect', href: 'https://fs.calibur.tv' },
       { rel: 'icon', type: 'image/x-icon', href: 'https://fs.calibur.tv/favicon.ico' }
     ]
   },
@@ -22,7 +23,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '~/plugins/both-sides.js' }, { src: '~/plugins/client-only.js', mode: 'client' }, { src: '~/plugins/server-only.js', mode: 'server' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -82,5 +83,9 @@ export default {
     corejs: 3,
     extractCSS: true,
     publicPath: isDev ? '/_nuxt/' : 'https://fs.calibur.tv/static/'
+  },
+
+  eslint: {
+    cache: false
   }
 }
