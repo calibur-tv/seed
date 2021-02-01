@@ -1,0 +1,64 @@
+.oneline {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clearfix {
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  &:before {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+.container {
+  margin-right: auto !important;
+  margin-left: auto !important;
+
+  @media (min-width: 768px) {
+    width: 750px;
+  }
+
+  @media (min-width: 992px) {
+    width: 980px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 1160px;
+  }
+}
+
+.fade-link {
+  transition: all .2s ease;
+
+  &:hover {
+    color: $color-main !important;
+    border-color: $color-main !important;
+  }
+}
+
+[class^="el-icon-"], [class*=" el-icon-"] {
+  vertical-align: middle !important;
+}
+
+::selection {
+  background-color: $color-main;
+  color: #fff;
+}
+
+mark {
+  background-color: $color-main;
+  color: $color-main;
+
+  &::selection {
+    background-color: transparent;
+    color: #fff;
+  }
+}

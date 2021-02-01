@@ -1,98 +1,40 @@
 <template>
   <div id="homepage">
-    <div :class="{ show: toggle }" :style="{ backgroundImage: banner1 ? `url(${$resize(banner1, options)})` : '' }" class="banner" />
-    <div :class="{ show: !toggle }" :style="{ backgroundImage: banner2 ? `url(${$resize(banner2, options)})` : '' }" class="banner" />
+    <AppBanner background="https://m1.calibur.tv/default-banner" />
+    <h1 class="calibur">calibur.tv</h1>
+    <AppFooter />
   </div>
 </template>
 
 <script>
-const BANNER_COUNT = 6
-const BANNER_BASE_URL = 'https://fs.calibur.tv/banner/'
-const getRandomBanner = () => {
-  let a = new Array(BANNER_COUNT).fill(BANNER_BASE_URL)
-  a = a.map((_, index) => `${_}${index + 1}.jpg`)
-  return shuffle(a)
-}
-const shuffle = (a) => {
-  let j, x, i
-  for (i = a.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1))
-    x = a[i]
-    a[i] = a[j]
-    a[j] = x
-  }
-  return a
-}
+import AppBanner from '@/components/app/AppBanner'
+import AppFooter from '@/components/app/AppFooter'
 
 export default {
   name: 'Homepage',
-  data() {
-    return {
-      banners: [],
-      banner1: null,
-      banner2: null,
-      timer: null,
-      toggle: true,
-      options: {
-        width: 2048,
-        height: 0,
-        mode: 0
-      },
-      index: 0
-    }
-  },
-  mounted() {
-    this.loopBanner()
-  },
-  beforeDestroy() {
-    if (this.timer) {
-      clearInterval(this.timer)
-      this.timer = null
-    }
-  },
-  methods: {
-    loopBanner() {
-      this.banners = getRandomBanner()
-      this.banner1 = this.banners[0]
-      this.timer = setInterval(() => {
-        if (!this.banners.length) {
-          return
-        }
-        this.index = 1 + this.index === this.banners.length ? 0 : this.index + 1
-        const data = this.banners[this.index]
-        this.toggle ? (this.banner2 = data) : (this.banner1 = data)
-        setTimeout(() => {
-          this.toggle = !this.toggle
-        }, 7500)
-      }, 15000)
-    }
+  components: {
+    AppBanner,
+    AppFooter
   }
 }
 </script>
 
 <style lang="scss">
 #homepage {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  background-color: #2d3748;
-  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
-  .banner {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 20;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    &.show {
-      opacity: 1;
-    }
+  .calibur {
+    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    display: block;
+    font-weight: 300;
+    font-size: 100px;
+    color: #35495e;
+    letter-spacing: 1px;
   }
 }
 </style>

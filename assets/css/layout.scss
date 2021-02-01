@@ -1,0 +1,37 @@
+.v-layout {
+  position: relative;
+  margin: 0 auto;
+  width: 1160px;
+
+  &__row {
+    @extend %clearfix;
+  }
+
+  &__left {
+    width: 900px;
+    float: left;
+  }
+
+  &__right {
+    width: 260px;
+    float: right;
+  }
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+@media screen and (max-width: 1400px) {
+  .v-layout {
+    width: 980px;
+
+    &__left {
+      width: 720px;
+    }
+  }
+}

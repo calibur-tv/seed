@@ -2,7 +2,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export default {
   ssr: true,
-  modern: 'server',
+  modern: isDev ? false : 'server',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'calibur | 天下漫友是一家',
@@ -20,7 +20,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['normalize.css', '~/assets/css/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [{ src: '~/plugins/both-sides.js' }, { src: '~/plugins/client-only.js', mode: 'client' }, { src: '~/plugins/server-only.js', mode: 'server' }],
@@ -33,8 +33,13 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/style-resources'
   ],
+
+  styleResources: {
+    scss: ['./assets/css/var.scss', './assets/css/mixin.scss']
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

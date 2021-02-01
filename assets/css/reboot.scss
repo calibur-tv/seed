@@ -1,0 +1,80 @@
+html {
+  scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  color: $color-text-1;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: hidden;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+    margin: 0;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+}
+
+textarea,
+input,
+button {
+  -webkit-appearance: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: inherit;
+  color: inherit;
+}
+
+img {
+  object-fit: cover;
+  max-width: 100%;
+}
+
+img, span, i, a, time, label {
+  vertical-align: middle;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a,
+button {
+  cursor: pointer !important;
+}
+
+main,
+aside,
+header,
+footer,
+section {
+  display: block;
+}
