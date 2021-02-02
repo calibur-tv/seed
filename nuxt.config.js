@@ -88,7 +88,27 @@ export default {
   build: {
     corejs: 3,
     extractCSS: true,
-    publicPath: isDev ? '/_nuxt/' : 'https://www.calibur.tv/'
+    publicPath: isDev ? '/_nuxt/' : 'https://www.calibur.tv/',
+    babel: {
+      plugins: [
+        [
+          'import',
+          {
+            libraryName: 'ant-design-vue',
+            libraryDirectory: 'es',
+            style: true
+          },
+          'ant-design-vue'
+        ]
+      ]
+    },
+    loaders: {
+      less: {
+        lessOptions: {
+          javascriptEnabled: true
+        }
+      }
+    }
   },
 
   eslint: {

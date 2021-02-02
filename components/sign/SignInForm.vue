@@ -1,13 +1,13 @@
 <template>
   <div class="sign-in-form">
-    <form :loading="loading" :form="form" :rule="rule" :error="false" @submit="login">
+    <form :loading="loading" :form="form" :rule="rule" :error="false">
       <input v-model.trim="form.access" type="text" placeholder="手机（填写常用手机号，用于登录）" />
       <input
         v-model.trim="form.secret"
         type="password"
         show-password
         placeholder="密码（6-16个字符组成，区分大小写）"
-        @keydown.enter.native="submitForm"
+        @keydown.enter="submitForm"
       />
       <div class="opt-container">
         <input v-model="form.remember" type="radio" size="small" label="记住我" />
@@ -21,7 +21,7 @@
         </ul>
         <button v-else type="button" @click="showOAuth = true">社交账号登录</button>
       </div>
-      <button slot="submit" :loading="loading" size="large" block round>登录</button>
+      <Button type="button" :loading="loading" size="large" block round @click="login">登录</Button>
     </form>
     <div class="others">
       <a @click="showReset">忘记密码?></a>
@@ -31,11 +31,14 @@
 </template>
 
 <script>
+import { Button } from 'ant-design-vue'
 import { login } from '~/api/signApi'
 
 export default {
   name: 'SignInForm',
-  components: {},
+  components: {
+    Button
+  },
   data() {
     const validateAccess = (rule, value, callback) => {
       if (!value) {
