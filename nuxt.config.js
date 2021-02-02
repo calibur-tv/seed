@@ -1,8 +1,9 @@
 const isDev = process.env.NODE_ENV === 'development'
 
 export default {
-  ssr: true,
-  modern: isDev ? false : 'server',
+  ssr: false,
+  modern: isDev ? false : 'client',
+  target: isDev ? '' : 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'calibur | 天下漫友是一家',
@@ -10,12 +11,6 @@ export default {
       { name: 'renderer', content: 'webkit|ie-comp|ie-stand' },
       { name: 'force-rendering', content: 'webkit' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' }
-    ],
-    link: [
-      { rel: 'dns-prefetch', href: 'https://fc.calibur.tv' },
-      { rel: 'dns-prefetch', href: 'https://fs.calibur.tv' },
-      { rel: 'preconnect', href: 'https://fs.calibur.tv' },
-      { rel: 'icon', type: 'image/x-icon', href: 'https://fs.calibur.tv/favicon.ico' }
     ]
   },
 
@@ -23,7 +18,12 @@ export default {
   css: ['normalize.css', '~/assets/css/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~/plugins/both-sides.js' }, { src: '~/plugins/client-only.js', mode: 'client' }, { src: '~/plugins/server-only.js', mode: 'server' }],
+  plugins: [
+    { src: '~/plugins/both-sides.js' },
+    { src: '~/plugins/client-only.js', mode: 'client' },
+    { src: '~/plugins/server-only.js', mode: 'server' },
+    { src: '~/plugins/axios.js' }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -70,7 +70,8 @@ export default {
       mobileAppIOS: false,
       favicon: false,
       charset: 'utf-8',
-      viewport: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover'
+      viewport:
+        'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover'
     },
     manifest: {
       name: '',
@@ -78,7 +79,7 @@ export default {
       description: ''
     },
     workbox: {
-      workboxURL: 'https://fs.calibur.tv/workbox-514/workbox-sw.js',
+      workboxURL: 'https://www.calibur.tv/workbox-514/workbox-sw.js',
       offline: false
     }
   },
@@ -87,7 +88,7 @@ export default {
   build: {
     corejs: 3,
     extractCSS: true,
-    publicPath: isDev ? '/_nuxt/' : 'https://fs.calibur.tv/static/'
+    publicPath: isDev ? '/_nuxt/' : 'https://www.calibur.tv/'
   },
 
   eslint: {

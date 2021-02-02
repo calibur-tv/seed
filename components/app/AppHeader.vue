@@ -1,3 +1,153 @@
+<template>
+  <nav id="app-header" :class="{ 'with-bg': hasBg }">
+    <div v-if="hasBg" class="mask-wrap">
+      <div class="mask-bg" :style="{ backgroundImage: `url(${background})` }" />
+    </div>
+    <div class="mask-shim" />
+    <div class="text-wrap v-layout">
+      <ul class="header-left">
+        <li>
+          <NLink class="nav-link home-link" to="/">
+            <i class="iconfont ic-calibur" />
+            <span>主站</span>
+          </NLink>
+        </li>
+        <!--
+        <li>
+          <NLink class="nav-link" to="/">
+            <span>游戏中心</span>
+          </NLink>
+        </li>
+        <li>
+          <NLink class="nav-link" to="/">
+            <span>直播</span>
+          </NLink>
+        </li>
+        <li>
+          <NLink class="nav-link" to="/">
+            <span>会员购</span>
+          </NLink>
+        </li>
+        <li>
+          <NLink class="nav-link" to="/">
+            <span>漫画</span>
+          </NLink>
+        </li>
+        <li>
+          <NLink class="nav-link" to="/">
+            <span>赛事</span>
+          </NLink>
+        </li>
+        <li>
+          <NLink class="nav-link" to="/">
+            <i class="iconfont ic-phone" />
+            <span>下载APP</span>
+          </NLink>
+        </li>
+        -->
+      </ul>
+      <ul class="header-right">
+        <template v-if="isAuth">
+          <li class="user-panel">
+            <AppPopover class-name="user-popover">
+              <template #trigger>
+                <NLink :to="$alias.user(user.slug)" class="avatar">
+                  <img :src="$resize(user.avatar, { width: 60 })" alt="" />
+                </NLink>
+              </template>
+              <template #content>
+                <p class="nickname oneline" v-html="user.nickname" />
+                <NLink :to="$alias.user(user.slug, 'setting')">
+                  <div class="field">
+                    <div class="label">
+                      <i class="iconfont ic-setup_fill" />
+                      <span>设置</span>
+                    </div>
+                  </div>
+                </NLink>
+                <button class="sign-out" @click="handleLogout">退出</button>
+              </template>
+            </AppPopover>
+          </li>
+          <li>
+            <NLink class="nav-link" to="/">
+              <span>大会员</span>
+            </NLink>
+          </li>
+          <li>
+            <NLink class="nav-link" to="/">
+              <span>消息</span>
+            </NLink>
+          </li>
+          <li>
+            <NLink class="nav-link" to="/">
+              <span>动态</span>
+            </NLink>
+          </li>
+          <li>
+            <NLink class="nav-link" to="/">
+              <span>稍后在看</span>
+            </NLink>
+          </li>
+          <li>
+            <NLink class="nav-link" to="/">
+              <span>收藏</span>
+            </NLink>
+          </li>
+        </template>
+        <template v-else>
+          <li>
+            <button class="nav-link" @click="handleSignIn">登录</button>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </nav>
+</template>
+
+<script>
+import AppPopover from '@/components/app/AppPopover'
+import { logout } from '~/api/signApi'
+
+export default {
+  name: 'AppHeader',
+  components: {
+    AppPopover
+  },
+  props: {
+    background: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    hasBg() {
+      return !!this.background
+    },
+    isAuth() {
+      return this.$store.state.isAuth
+    },
+    user() {
+      return this.$store.state.user
+    }
+  },
+  methods: {
+    handleSignIn() {
+      this.$channel.$emit('sign-in')
+    },
+    handleLogout() {
+      logout(this)
+      this.$cookie.remove('JWT-TOKEN')
+      // this.$channel.socketDisconnect()
+      window.location = '/'
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 $header-link-padding: 7px;
 
@@ -5,7 +155,8 @@ $header-link-padding: 7px;
   position: relative;
   height: $app-header-hgt;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  font: 12px Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
+  font: 12px Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei,
+    sans-serif;
   z-index: 99;
 
   li {
@@ -207,175 +358,3 @@ $header-link-padding: 7px;
   }
 }
 </style>
-
-<template>
-  <nav id="app-header" :class="{ 'with-bg': hasBg }">
-    <div v-if="hasBg" class="mask-wrap">
-      <div class="mask-bg" :style="{ backgroundImage: `url(${background})` }" />
-    </div>
-    <div class="mask-shim" />
-    <div class="text-wrap v-layout">
-      <ul class="header-left">
-        <li>
-          <NLink class="nav-link home-link" to="/">
-            <i class="iconfont ic-calibur" />
-            <span>主站</span>
-          </NLink>
-        </li>
-        <!--
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>游戏中心</span>
-          </NLink>
-        </li>
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>直播</span>
-          </NLink>
-        </li>
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>会员购</span>
-          </NLink>
-        </li>
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>漫画</span>
-          </NLink>
-        </li>
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>赛事</span>
-          </NLink>
-        </li>
-        <li>
-          <NLink class="nav-link" to="/">
-            <i class="iconfont ic-phone" />
-            <span>下载APP</span>
-          </NLink>
-        </li>
-        -->
-      </ul>
-      <ul class="header-right">
-        <template v-if="isAuth">
-          <li class="user-panel">
-            <AppPopover class-name="user-popover">
-              <template #trigger>
-                <NLink :to="$alias.user(user.slug)" class="avatar">
-                  <img :src="$resize(user.avatar, { width: 60 })" alt="" />
-                </NLink>
-              </template>
-              <template #content>
-                <p class="nickname oneline" v-html="user.nickname" />
-                <NLink :to="$alias.user(user.slug, 'setting')">
-                  <div class="field">
-                    <div class="label">
-                      <i class="iconfont ic-setup_fill" />
-                      <span>设置</span>
-                    </div>
-                  </div>
-                </NLink>
-                <button class="sign-out" @click="handleLogout">退出</button>
-              </template>
-            </AppPopover>
-          </li>
-          <li>
-            <NLink class="nav-link" to="/">
-              <span>大会员</span>
-            </NLink>
-          </li>
-          <li>
-            <NLink class="nav-link" to="/">
-              <span>消息</span>
-            </NLink>
-          </li>
-          <li>
-            <NLink class="nav-link" to="/">
-              <span>动态</span>
-            </NLink>
-          </li>
-          <li>
-            <NLink class="nav-link" to="/">
-              <span>稍后在看</span>
-            </NLink>
-          </li>
-          <li>
-            <NLink class="nav-link" to="/">
-              <span>收藏</span>
-            </NLink>
-          </li>
-        </template>
-        <!--
-        <template v-else>
-          <li>
-            <button class="nav-link" @click="handleSignIn">登录</button>
-          </li>
-          <li>
-            <NLink class="nav-link" to="/">
-              <span>动态</span>
-            </NLink>
-          </li>
-        </template>
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>历史</span>
-          </NLink>
-        </li>
-        <li>
-          <NLink class="nav-link" to="/">
-            <span>创作中心</span>
-          </NLink>
-        </li>
-        <li>
-          <a href="/about/donate" target="_blank" class="create-btn">
-            捐赠
-          </a>
-        </li>
-        -->
-      </ul>
-    </div>
-  </nav>
-</template>
-
-<script>
-import AppPopover from '@/components/app/AppPopover'
-// import { logout } from '~/api/userApi'
-
-export default {
-  name: 'AppHeader',
-  components: {
-    AppPopover
-  },
-  props: {
-    background: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {}
-  },
-  computed: {
-    hasBg() {
-      return !!this.background
-    },
-    isAuth() {
-      return this.$store.state.isAuth
-    },
-    user() {
-      return this.$store.state.user
-    }
-  },
-  methods: {
-    handleSignIn() {
-      this.$channel.$emit('sign-in')
-    },
-    handleLogout() {
-      // logout(this)
-      this.$cookie.remove('JWT-TOKEN')
-      // this.$channel.socketDisconnect()
-      window.location = '/'
-    }
-  }
-}
-</script>

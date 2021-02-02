@@ -1,3 +1,58 @@
+<template>
+  <section id="app-banner" :style="{ backgroundImage: `url(${background})` }">
+    <div class="v-layout">
+      <img class="logo" :src="$resize('logo-border.png', { width: 220, rule: 2 })" alt="logo" />
+      <div class="search-box">
+        <a href="https://www.bilibili.com/v/popular/rank/all" class="rank">
+          <span>排行榜</span>
+        </a>
+        <form action="#" method="get" class="search-wrap" @submit.prevent="handleSearch">
+          <input
+            v-model="keyword"
+            placeholder="搜索 bilibili"
+            type="text"
+            name="keyword"
+            aria-autocomplete="both"
+            aria-haspopup="false"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
+            role="combobox"
+            spellcheck="false"
+            maxlength="50"
+          />
+          <button type="submit" class="submit-btn" />
+        </form>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'AppBanner',
+  props: {
+    background: {
+      required: true,
+      type: String
+    }
+  },
+  data() {
+    return {
+      keyword: ''
+    }
+  },
+  methods: {
+    handleSearch() {
+      if (!this.keyword) {
+        return
+      }
+      window.open(`https://search.bilibili.com/all?keyword=${encodeURIComponent(this.keyword)}&from_source=calibur`)
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 #app-banner {
   width: 100%;
@@ -105,58 +160,3 @@
   }
 }
 </style>
-
-<template>
-  <section id="app-banner" :style="{ backgroundImage: `url(${background})` }">
-    <div class="v-layout">
-      <img class="logo" :src="$resize('logo-border.png', { width: 220, rule: 2 })" alt="logo" />
-      <div class="search-box">
-        <a href="https://www.bilibili.com/v/popular/rank/all" class="rank">
-          <span>排行榜</span>
-        </a>
-        <form action="#" method="get" class="search-wrap" @submit.prevent="handleSearch">
-          <input
-            v-model="keyword"
-            placeholder="搜索 bilibili"
-            type="text"
-            name="keyword"
-            aria-autocomplete="both"
-            aria-haspopup="false"
-            autocapitalize="off"
-            autocomplete="off"
-            autocorrect="off"
-            role="combobox"
-            spellcheck="false"
-            maxlength="50"
-          />
-          <button type="submit" class="submit-btn" />
-        </form>
-      </div>
-    </div>
-  </section>
-</template>
-
-<script>
-export default {
-  name: 'AppBanner',
-  props: {
-    background: {
-      required: true,
-      type: String
-    }
-  },
-  data() {
-    return {
-      keyword: ''
-    }
-  },
-  methods: {
-    handleSearch() {
-      if (!this.keyword) {
-        return
-      }
-      window.open(`https://search.bilibili.com/all?keyword=${encodeURIComponent(this.keyword)}&from_source=calibur`)
-    }
-  }
-}
-</script>
