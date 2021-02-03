@@ -105,7 +105,10 @@ export default {
     loaders: {
       less: {
         lessOptions: {
-          javascriptEnabled: true
+          javascriptEnabled: true,
+          modifyVars: {
+            'primary-color': '#00a1d6'
+          }
         }
       }
     }

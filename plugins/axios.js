@@ -1,4 +1,4 @@
-import generateRequestError from '~/assets/js/generateRequestError'
+import { message } from 'ant-design-vue'
 import parseToken from '~/assets/js/parseToken'
 
 export default ({ $axios, app }) => {
@@ -10,10 +10,16 @@ export default ({ $axios, app }) => {
   })
 
   $axios.onResponse((resp) => {
-    return resp.data
+    console.log('resp', resp)
+    if (resp.data.code) {
+      return Promise.reject(resp.data)
+    }
+    console.log('resp.data.data', resp.data.data)
+    return Promise.resolve(resp.data.data)
   })
 
   $axios.onError((error) => {
-    return Promise.reject(generateRequestError(error))
+    message.error(error.message || '网络错误，请稍后再试')
+    return Promise.reject(error)
   })
 }

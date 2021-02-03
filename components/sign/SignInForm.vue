@@ -1,17 +1,16 @@
 <template>
   <div class="sign-in-form">
     <form :loading="loading" :form="form" :rule="rule" :error="false">
-      <input v-model.trim="form.access" type="text" placeholder="手机（填写常用手机号，用于登录）" />
-      <input
+      <Input v-model.trim="form.access" type="text" placeholder="手机（填写常用手机号，用于登录）" />
+      <Input
         v-model.trim="form.secret"
+        password
         type="password"
-        show-password
         placeholder="密码（6-16个字符组成，区分大小写）"
-        @keydown.enter="submitForm"
+        @keydown.enter.native="submitForm"
       />
       <div class="opt-container">
-        <input v-model="form.remember" type="radio" size="small" label="记住我" />
-        <ul v-if="showOAuth" class="provider">
+        <ul class="provider">
           <li @click="authQQ">
             <i class="iconfont ic-qq" />
           </li>
@@ -19,9 +18,8 @@
             <i class="iconfont ic-v-chat" />
           </li>
         </ul>
-        <button v-else type="button" @click="showOAuth = true">社交账号登录</button>
       </div>
-      <Button type="button" :loading="loading" size="large" block round @click="login">登录</Button>
+      <Button type="primary" block :loading="loading" @click="login">登录</Button>
     </form>
     <div class="others">
       <a @click="showReset">忘记密码?></a>
@@ -31,12 +29,13 @@
 </template>
 
 <script>
-import { Button } from 'ant-design-vue'
+import { Input, Button } from 'ant-design-vue'
 import { login } from '~/api/signApi'
 
 export default {
   name: 'SignInForm',
   components: {
+    Input,
     Button
   },
   data() {
@@ -64,23 +63,21 @@ export default {
     return {
       form: {
         access: '',
-        secret: '',
-        remember: true
+        secret: ''
       },
       rule: {
         access: { validator: validateAccess },
         secret: { validator: validateSecret }
       },
-      loading: false,
-      showOAuth: true
+      loading: false
     }
   },
   methods: {
     authQQ() {
-      window.location.href = 'https://api.calibur.tv/callback/oauth2/qq?from=sign'
+      window.location.href = 'https://fc.calibur.tv/callback/oauth2/qq?from=sign'
     },
     authWechat() {
-      window.location.href = 'https://api.calibur.tv/callback/oauth2/wechat?from=sign'
+      window.location.href = 'https://fc.calibur.tv/callback/oauth2/wechat?from=sign'
     },
     redirect() {
       return this.$route.query.redirect ? this.$route.query.redirect : encodeURIComponent(window.location.href)
@@ -92,21 +89,20 @@ export default {
       this.loading = true
       login(this, {
         access: this.form.access,
-        secret: this.form.secret,
-        remember: this.form.remember
+        secret: this.form.secret
       })
         .then((token) => {
-          this.$cookie.set('JWT-TOKEN', token, {
-            expires: this.form.remember ? 365 : 1
-          })
-          if (this.$route.query.redirect) {
-            window.location = decodeURIComponent(this.$route.query.redirect)
-          } else {
-            window.location.reload()
-          }
+          console.log('token', token)
+          // this.$cookie.set('JWT-TOKEN', token, {
+          //   expires: 365
+          // })
+          // if (this.$route.query.redirect) {
+          //   window.location = decodeURIComponent(this.$route.query.redirect)
+          // } else {
+          //   window.location.reload()
+          // }
         })
-        .catch((err) => {
-          this.$toast.error(err.message)
+        .catch(() => {
           this.loading = false
         })
     },

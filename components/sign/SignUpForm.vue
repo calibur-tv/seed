@@ -1,24 +1,28 @@
 <template>
   <div class="sign-up-form">
-    <form :loading="submitBtnLoading" :form="form" :rule="rule" :error="false" @submit="submitForm">
-      <input
+    <form :loading="submitBtnLoading" :form="form" :rule="rule" @submit="submitForm">
+      <Input
         v-model.trim="form.access"
         type="text"
         placeholder="手机（填写常用手机号，用于登录）"
         auto-complete="off"
       />
-      <input
+      <Input
         v-model.trim="form.secret"
         type="password"
-        show-password
         placeholder="密码（6-16个字符组成，区分大小写）"
         auto-complete="off"
       />
-      <input v-if="!inviteCode" v-model.trim="form.inviteCode" placeholder="邀请码（可为空）" auto-complete="off" />
-      <button slot="submit" :loading="submitBtnLoading" :disabled="submitBtnDisabled" size="large" block round>
+      <Input
+        v-model.trim="form.inviteCode"
+        :disabled="!!inviteCode"
+        placeholder="邀请码（可为空）"
+        auto-complete="off"
+      />
+      <Button type="primary" :loading="submitBtnLoading" :disabled="submitBtnDisabled" block @click="submitForm">
         {{ submitBtnText }}
         <template v-if="timeout"> （{{ timeout }}s 后可重新获取） </template>
-      </button>
+      </Button>
     </form>
     <div class="others">
       <ul class="provider">
@@ -30,17 +34,32 @@
           <i class="iconfont ic-v-chat" />
         </li>
       </ul>
-      <a v-if="!inviteCode" @click="showLogin">已有账号»</a>
+      <a @click="showLogin">已有账号»</a>
     </div>
+    <AModal
+      title="短信已发送"
+      :visible="showAuthModal"
+      :confirm-loading="waitAuthModal"
+      ok-text="确定"
+      cancel-text="取消"
+      @ok="submitFormData"
+      @cancel="closeAuthModal"
+    >
+      <Input v-model.trim="form.authCode" placeholder="请输入收到的验证码" type="text"></Input>
+    </AModal>
   </div>
 </template>
 
 <script>
+import { Input, Button } from 'ant-design-vue'
 import { sendMessage, register } from '~/api/signApi'
 
 export default {
   name: 'SignUpForm',
-  components: {},
+  components: {
+    Input,
+    Button
+  },
   props: {
     inviteCode: {
       type: [String, Number],
@@ -107,7 +126,9 @@ export default {
        * ---- 无论如何，注册失败都返回 step 0
        */
       step: 0,
-      timeout: 0
+      timeout: 0,
+      showAuthModal: false,
+      waitAuthModal: false
     }
   },
   computed: {
@@ -154,10 +175,10 @@ export default {
       return result
     },
     qqRegisterLink() {
-      window.location.href = `${this.addInviteForLink('https://api.calibur.tv/callback/oauth2/qq?from=sign')}}`
+      window.location.href = `${this.addInviteForLink('https://fc.calibur.tv/callback/oauth2/qq?from=sign')}}`
     },
     wechatRegisterLink() {
-      window.location.href = `${this.addInviteForLink('https://api.calibur.tv/callback/oauth2/wechat?from=sign')}}`
+      window.location.href = `${this.addInviteForLink('https://fc.calibur.tv/callback/oauth2/wechat?from=sign')}}`
     },
     redirect() {
       return this.$route.query.redirect ? this.$route.query.redirect : encodeURIComponent(window.location.href)
@@ -180,7 +201,6 @@ export default {
         this.step = 2
         this.openConfirmModal()
       } catch (err) {
-        this.$toast.error(err.message)
         this.step = 0
       } finally {
         this.timeout = 60
@@ -193,18 +213,21 @@ export default {
       }
     },
     openConfirmModal() {
-      this.$prompt('请输入收到的验证码', '短信已发送', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /^\d{6}$/,
-        inputErrorMessage: '验证码格式不正确'
-      })
-        .then(({ value }) => {
-          this.form.authCode = value
-          this.step = 3
-          this.signUp()
-        })
-        .catch(() => {})
+      this.showAuthModal = true
+    },
+    submitFormData() {
+      this.waitAuthModal = true
+      if (!/^\d{6}$/.test(this.form.authCode)) {
+        this.waitAuthModal = false
+        this.$toast.error('验证码格式不正确')
+        return
+      }
+      this.step = 3
+      this.signUp()
+    },
+    closeAuthModal() {
+      this.showAuthModal = false
+      this.waitAuthModal = false
     },
     signUp() {
       register(this, {
@@ -215,7 +238,7 @@ export default {
       })
         .then((token) => {
           this.$cookie.set('JWT-TOKEN', token)
-          this.$toast.success('注册成功！').then(() => {
+          this.$toast.success('注册成功！', () => {
             if (this.$route.query.redirect) {
               window.location = decodeURIComponent(this.$route.query.redirect)
             } else {
@@ -223,9 +246,11 @@ export default {
             }
           })
         })
-        .catch((err) => {
+        .catch(() => {
           this.step = 0
-          this.$toast.error(err.message)
+        })
+        .finally(() => {
+          this.closeAuthModal()
         })
     },
     showLogin() {
