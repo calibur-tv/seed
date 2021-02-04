@@ -100,7 +100,7 @@ $input-height: 40px;
   perspective: 800px;
   perspective-origin: 50% 50%;
   background-color: transparent;
-  z-index: 30;
+  z-index: 100;
   position: fixed;
   left: 0;
   top: 0;

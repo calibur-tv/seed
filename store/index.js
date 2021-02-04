@@ -1,5 +1,5 @@
 import Vue from 'vue'
-// import { getLoginUser, getMailboxTotal } from '~/api/userApi'
+import { getLoginUser } from '~/api/signApi'
 // import { getUserFromSessionStore, set as setCache } from '~/assets/js/cache'
 // import { randomStr } from '~/assets/js/utils'
 
@@ -54,7 +54,6 @@ export const actions = {
     }
     try {
       commit('SET_LOGGING')
-      // eslint-disable-next-line
       const user = await getLoginUser(this)
       commit('SET_USER_INFO', user)
       return user

@@ -77,7 +77,7 @@ export default {
       window.location.href = 'https://fc.calibur.tv/callback/oauth2/qq?from=sign'
     },
     authWechat() {
-      window.location.href = 'https://fc.calibur.tv/callback/oauth2/wechat?from=sign'
+      window.location.href = 'http://localhost:9000/callback/oauth2/wechat?from=sign'
     },
     redirect() {
       return this.$route.query.redirect ? this.$route.query.redirect : encodeURIComponent(window.location.href)
@@ -92,15 +92,14 @@ export default {
         secret: this.form.secret
       })
         .then((token) => {
-          console.log('token', token)
-          // this.$cookie.set('JWT-TOKEN', token, {
-          //   expires: 365
-          // })
-          // if (this.$route.query.redirect) {
-          //   window.location = decodeURIComponent(this.$route.query.redirect)
-          // } else {
-          //   window.location.reload()
-          // }
+          this.$cookie.set('JWT-TOKEN', token, {
+            expires: 365
+          })
+          if (this.$route.query.redirect) {
+            window.location = decodeURIComponent(this.$route.query.redirect)
+          } else {
+            window.location.reload()
+          }
         })
         .catch(() => {
           this.loading = false

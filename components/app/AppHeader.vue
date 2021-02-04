@@ -51,13 +51,13 @@
           <li class="user-panel">
             <AppPopover class-name="user-popover">
               <template #trigger>
-                <NLink :to="$alias.user(user.slug)" class="avatar">
+                <NLink to="/" class="avatar">
                   <img :src="$resize(user.avatar, { width: 60 })" alt="" />
                 </NLink>
               </template>
               <template #content>
                 <p class="nickname oneline" v-html="user.nickname" />
-                <NLink :to="$alias.user(user.slug, 'setting')">
+                <NLink to="/">
                   <div class="field">
                     <div class="label">
                       <i class="iconfont ic-setup_fill" />
