@@ -1,6 +1,6 @@
 <template>
   <div id="layout-default">
-    <AppHeader background="https://m1.calibur.tv/default-banner" />
+    <AppHeader />
     <Nuxt />
     <SignDialog />
   </div>

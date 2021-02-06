@@ -24,6 +24,7 @@
         <template v-if="timeout"> （{{ timeout }}s 后可重新获取） </template>
       </Button>
     </form>
+    <!--
     <div class="others">
       <ul class="provider">
         <span>社交账号注册</span>
@@ -36,6 +37,7 @@
       </ul>
       <a @click="showLogin">已有账号»</a>
     </div>
+    -->
     <AModal
       title="短信已发送"
       :visible="showAuthModal"

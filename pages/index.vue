@@ -1,19 +1,17 @@
 <template>
   <div id="homepage">
-    <AppBanner background="https://m1.calibur.tv/default-banner" />
+    <div class="shim" />
     <h1 class="calibur">calibur.tv</h1>
     <AppFooter />
   </div>
 </template>
 
 <script>
-import AppBanner from '@/components/app/AppBanner'
 import AppFooter from '@/components/app/AppFooter'
 
 export default {
   name: 'Homepage',
   components: {
-    AppBanner,
     AppFooter
   }
 }
@@ -21,14 +19,15 @@ export default {
 
 <style lang="scss">
 #homepage {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  .shim {
+    height: 100vh;
+  }
 
   .calibur {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
       Arial, sans-serif;
     display: block;

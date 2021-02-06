@@ -9,6 +9,7 @@
         placeholder="密码（6-16个字符组成，区分大小写）"
         @keydown.enter.native="submitForm"
       />
+      <!--
       <div class="opt-container">
         <ul class="provider">
           <li @click="authQQ">
@@ -19,6 +20,7 @@
           </li>
         </ul>
       </div>
+      -->
       <Button type="primary" block :loading="loading" @click="login">登录</Button>
     </form>
     <div class="others">
@@ -77,7 +79,7 @@ export default {
       window.location.href = 'https://fc.calibur.tv/callback/oauth2/qq?from=sign'
     },
     authWechat() {
-      window.location.href = 'http://localhost:9000/callback/oauth2/wechat?from=sign'
+      window.location.href = 'http://fc.calibur.tv/callback/oauth2/wechat?from=sign'
     },
     redirect() {
       return this.$route.query.redirect ? this.$route.query.redirect : encodeURIComponent(window.location.href)

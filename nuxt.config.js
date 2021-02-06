@@ -22,7 +22,8 @@ export default {
     { src: '~/plugins/both-sides.js' },
     { src: '~/plugins/client-only.js', mode: 'client' },
     { src: '~/plugins/server-only.js', mode: 'server' },
-    { src: '~/plugins/axios.js' }
+    { src: '~/plugins/axios.js' },
+    { src: '~/plugins/qiankun.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
