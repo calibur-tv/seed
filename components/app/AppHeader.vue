@@ -9,7 +9,12 @@
         <li>
           <NLink class="nav-link home-link" to="/">
             <i class="iconfont ic-calibur" />
-            <span>主站</span>
+            <span>首页</span>
+          </NLink>
+        </li>
+        <li>
+          <NLink class="nav-link home-link" to="/about">
+            <span>关于</span>
           </NLink>
         </li>
         <!--
@@ -152,6 +157,7 @@ export default {
 $header-link-padding: 7px;
 
 #app-header {
+  width: 100%;
   position: relative;
   height: $app-header-hgt;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);

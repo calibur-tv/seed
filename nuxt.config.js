@@ -22,8 +22,7 @@ export default {
     { src: '~/plugins/both-sides.js' },
     { src: '~/plugins/client-only.js', mode: 'client' },
     { src: '~/plugins/server-only.js', mode: 'server' },
-    { src: '~/plugins/axios.js' },
-    { src: '~/plugins/qiankun.js', mode: 'client' }
+    { src: '~/plugins/axios.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -34,7 +33,6 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
     '@nuxtjs/style-resources'
   ],
 
@@ -89,30 +87,7 @@ export default {
   build: {
     corejs: 3,
     extractCSS: true,
-    publicPath: isDev ? '/_nuxt/' : 'https://www.calibur.tv/',
-    babel: {
-      plugins: [
-        [
-          'import',
-          {
-            libraryName: 'ant-design-vue',
-            libraryDirectory: 'es',
-            style: true
-          },
-          'ant-design-vue'
-        ]
-      ]
-    },
-    loaders: {
-      less: {
-        lessOptions: {
-          javascriptEnabled: true,
-          modifyVars: {
-            'primary-color': '#00a1d6'
-          }
-        }
-      }
-    }
+    publicPath: isDev ? '/_nuxt/' : 'https://www.calibur.tv/'
   },
 
   eslint: {
