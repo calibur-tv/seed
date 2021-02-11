@@ -1,8 +1,12 @@
 <template>
   <div style="text-align: center">
-    <div id="about-01">vue-01 loading...</div>
+    <VCurtain id="about-01" :position="{ left: 200, top: 200 }">
+      <div id="about-01">vue-01 loading...</div>
+    </VCurtain>
     <br />
-    <div id="about-02">vue-02 loading...</div>
+    <VCurtain id="about-02" :position="{ left: 200, top: 500 }">
+      <div id="about-02">vue-02 loading...</div>
+    </VCurtain>
   </div>
 </template>
 

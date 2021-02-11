@@ -1,0 +1,41 @@
+$curtain-border-color: #797d80;
+
+.curtain {
+  position: absolute;
+  left: 0;
+  top: 0;
+  filter: drop-shadow(0px 5px 5px rgba(2, 8, 20, 0.1));
+
+  &__header {
+    position: relative;
+    height: 15px;
+    background-color: #F1F3F4;
+    opacity: 0.9;
+    border-radius: 0 8px 0 0;
+
+    &__drag {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 160px;
+      height: 40px;
+      background-color: #F1F3F4;
+      border-radius: 20px 20px 0 0;
+    }
+  }
+
+  &__body {
+    user-select: auto;
+    background-color: #fff;
+    padding: 1px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  &--moving {
+    .curtain {
+      &__header {
+        cursor: move;
+      }
+    }
+  }
+}

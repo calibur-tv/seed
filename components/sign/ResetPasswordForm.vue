@@ -1,12 +1,12 @@
 <template>
   <div class="reset-password-form">
     <form :loading="submitBtnLoading" :form="form" :rule="rule" @submit="submitForm">
-      <Input v-model.trim="form.access" type="text" placeholder="手机号" auto-complete="off" />
-      <Input v-model.trim="form.secret" type="text" placeholder="新密码" auto-complete="off" />
-      <Button type="primary" :loading="submitBtnLoading" :disabled="submitBtnDisabled" block>
+      <input v-model.trim="form.access" type="text" placeholder="手机号" auto-complete="off" />
+      <input v-model.trim="form.secret" type="text" placeholder="新密码" auto-complete="off" />
+      <button type="button" :loading="submitBtnLoading" :disabled="submitBtnDisabled">
         {{ submitBtnText }}
         <template v-if="timeout"> （{{ timeout }}s 后可重新获取） </template>
-      </Button>
+      </button>
     </form>
     <div class="others">
       <a @click="showLogin">返回登录></a>
@@ -16,15 +16,10 @@
 </template>
 
 <script>
-import { Input, Button } from 'ant-design-vue'
 import { sendMessage, resetPassword } from '~/api/signApi'
 
 export default {
   name: 'ResetPasswordForm',
-  components: {
-    Input,
-    Button
-  },
   data() {
     const validateAccess = (rule, value, callback) => {
       if (!value) {

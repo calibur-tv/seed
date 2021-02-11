@@ -1,13 +1,12 @@
 <template>
   <div class="sign-in-form">
     <form :loading="loading" :form="form" :rule="rule" :error="false">
-      <Input v-model.trim="form.access" type="text" placeholder="手机（填写常用手机号，用于登录）" />
-      <Input
+      <input v-model.trim="form.access" type="text" placeholder="手机（填写常用手机号，用于登录）" />
+      <input
         v-model.trim="form.secret"
-        password
         type="password"
         placeholder="密码（6-16个字符组成，区分大小写）"
-        @keydown.enter.native="submitForm"
+        @keydown.enter="submitForm"
       />
       <!--
       <div class="opt-container">
@@ -21,7 +20,7 @@
         </ul>
       </div>
       -->
-      <Button type="primary" block :loading="loading" @click="login">登录</Button>
+      <button type="button" :loading="loading" @click="login">登录</button>
     </form>
     <div class="others">
       <a @click="showReset">忘记密码?></a>
@@ -31,15 +30,10 @@
 </template>
 
 <script>
-import { Input, Button } from 'ant-design-vue'
 import { login } from '~/api/signApi'
 
 export default {
   name: 'SignInForm',
-  components: {
-    Input,
-    Button
-  },
   data() {
     const validateAccess = (rule, value, callback) => {
       if (!value) {

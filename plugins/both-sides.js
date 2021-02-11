@@ -1,16 +1,17 @@
 import Vue from 'vue'
-import { Modal } from 'ant-design-vue'
 import * as utils from '~/assets/js/utils'
 import imageResize from '~/assets/js/imageResize'
+import CurtainManager from '~/assets/js/curtain/manager'
+import CurtainComponent from '~/assets/js/curtain/index'
 
-Vue.use(Modal)
+Vue.component(CurtainComponent.name, CurtainComponent)
 
-export default ({ store }) => {
-  Vue.use({
-    install(Vue) {
-      Vue.prototype.$utils = utils
+Vue.use({
+  install(Vue) {
+    Vue.prototype.$utils = utils
 
-      Vue.prototype.$resize = imageResize
-    }
-  })
-}
+    Vue.prototype.$resize = imageResize
+
+    Vue.prototype.$curtainManager = new CurtainManager()
+  }
+})
