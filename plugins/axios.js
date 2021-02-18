@@ -13,4 +13,6 @@ export default ({ $axios, app }) => {
   $axios.onError((error) => {
     message.error(error.message || '网络错误，请稍后再试')
   })
+
+  window.$axios = $axios
 }
