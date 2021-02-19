@@ -141,7 +141,7 @@ export default {
   },
   methods: {
     handleSignIn() {
-      this.$channel.$emit('sign-in')
+      this.$channel.emit('sign-in')
     },
     handleLogout() {
       logout(this)

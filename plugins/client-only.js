@@ -1,14 +1,19 @@
 import Vue from 'vue'
-import { message } from 'ant-design-vue'
 import Cookies from 'js-cookie'
-import channel from '~/assets/js/channel'
+import mitt from 'mitt'
 
-Vue.use({
-  install(Vue) {
-    Vue.prototype.$channel = new Vue(channel)
+export default ({ $axios }) => {
+  const emitter = mitt()
 
-    Vue.prototype.$cookie = Cookies
+  Vue.use({
+    install(Vue) {
+      Vue.prototype.$channel = emitter
 
-    Vue.prototype.$toast = message
-  }
-})
+      Vue.prototype.$cookie = Cookies
+    }
+  })
+
+  window.$axios = $axios
+  window.$cookie = Cookies
+  window.$channel = emitter
+}

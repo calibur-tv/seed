@@ -1,28 +1,28 @@
 <template>
   <div class="sign-up-form">
     <form :loading="submitBtnLoading" :form="form" :rule="rule" @submit="submitForm">
-      <Input
+      <input
         v-model.trim="form.access"
         type="text"
         placeholder="手机（填写常用手机号，用于登录）"
         auto-complete="off"
       />
-      <Input
+      <input
         v-model.trim="form.secret"
         type="password"
         placeholder="密码（6-16个字符组成，区分大小写）"
         auto-complete="off"
       />
-      <Input
+      <input
         v-model.trim="form.inviteCode"
         :disabled="!!inviteCode"
         placeholder="邀请码（可为空）"
         auto-complete="off"
       />
-      <Button type="primary" :loading="submitBtnLoading" :disabled="submitBtnDisabled" block @click="submitForm">
+      <button type="primary" :loading="submitBtnLoading" :disabled="submitBtnDisabled" block @click="submitForm">
         {{ submitBtnText }}
         <template v-if="timeout"> （{{ timeout }}s 后可重新获取） </template>
-      </Button>
+      </button>
     </form>
     <!--
     <div class="others">
@@ -37,7 +37,6 @@
       </ul>
       <a @click="showLogin">已有账号»</a>
     </div>
-    -->
     <AModal
       title="短信已发送"
       :visible="showAuthModal"
@@ -47,21 +46,17 @@
       @ok="submitFormData"
       @cancel="closeAuthModal"
     >
-      <Input v-model.trim="form.authCode" placeholder="请输入收到的验证码" type="text"></Input>
+      <input v-model.trim="form.authCode" placeholder="请输入收到的验证码" type="text"></input>
     </AModal>
+    -->
   </div>
 </template>
 
 <script>
-import { Input, Button } from 'ant-design-vue'
 import { sendMessage, register } from '~/api/signApi'
 
 export default {
   name: 'SignUpForm',
-  components: {
-    Input,
-    Button
-  },
   props: {
     inviteCode: {
       type: [String, Number],

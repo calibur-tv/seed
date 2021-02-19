@@ -60,14 +60,14 @@ export default {
   },
   mounted() {
     this.canRender = true
-    this.$channel.$on('sign-in', () => {
+    this.$channel.on('sign-in', () => {
       if (window.screen.width <= 768) {
         window.location.href = this.$alias.sign()
       } else {
         this.showLogin()
       }
     })
-    this.$channel.$on('sign-up', () => {
+    this.$channel.on('sign-up', () => {
       this.showRegister()
     })
   },
